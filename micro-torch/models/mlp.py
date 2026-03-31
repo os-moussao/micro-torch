@@ -1,7 +1,8 @@
 from layers import Linear
 from autograd import Grad
+from layers import Base
 
-class MLP():
+class MLP(Base):
     """Multi-Layer Perceptron (MLP) model."""
     def __init__(self, in_size: int, out_size: int, hidden_layers: list[int] = [32]):
         assert len(hidden_layers) > 0, "At least one hidden layer is required."
@@ -29,6 +30,3 @@ class MLP():
         for layer in self.layers:
             params.extend(layer.parameters())
         return params
-
-    def __call__(self, x):
-        return self.forward(x)
