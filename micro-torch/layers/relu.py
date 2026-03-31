@@ -1,5 +1,5 @@
-from autograd.autograd import Grad
-from layers.base import Base
+from autograd import Grad
+from layers import Base
 
 class ReLU(Base):
     def __init__(self):

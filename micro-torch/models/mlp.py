@@ -1,5 +1,5 @@
-from layers.linear import Linear
-from autograd.autograd import Grad
+from layers import Linear
+from autograd import Grad
 
 class MLP():
     """Multi-Layer Perceptron (MLP) model."""

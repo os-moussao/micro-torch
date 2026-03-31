@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from autograd.autograd import Grad
+from autograd import Grad
 
 class Base(ABC):
     @abstractmethod

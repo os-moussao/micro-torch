@@ -1,6 +1,6 @@
 from typing import Literal, Optional
-from autograd.autograd import Grad
-from layers.base import Base
+from autograd import Grad
+from layers import Base
 
 class Linear(Base):
     def __init__(self, in_features: int, out_features: int, bias=True, activation: Optional[Literal['relu']] = None):
