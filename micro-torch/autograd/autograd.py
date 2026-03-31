@@ -143,6 +143,12 @@ class Grad():
         return np.array(a).reshape(shape)
 
     @staticmethod
+    def rand(shape: tuple | int, requires_grad=True):
+        len = shape if isinstance(shape, int) else np.prod(shape)
+        a = [Grad(np.random.rand(), requires_grad) for _ in range(len)]
+        return np.array(a).reshape(shape)
+
+    @staticmethod
     def zeros(shape: tuple | int, requires_grad=True):
         return Grad.full(shape, 0, requires_grad)
 
@@ -201,3 +207,9 @@ class Grad():
     def relu(x: Grad | np.ndarray) -> Grad | np.ndarray:
         mult = x > 0
         return mult * x
+
+    @staticmethod
+    def item(x: np.ndarray) -> Grad:
+        x = x.flatten()
+        assert len(x) == 1, "Only one element allowed"
+        return x[0]
