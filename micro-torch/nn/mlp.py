@@ -18,5 +18,5 @@ class MLP(Model):
         self.layers.append(Linear(
             in_features=hidden_layers[-1],
             out_features=out_size,
-            activation='relu')
+            activation=None)
         )
