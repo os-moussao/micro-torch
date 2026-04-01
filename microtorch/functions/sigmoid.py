@@ -1,4 +1,4 @@
-from autograd import Grad
+from microtorch.autograd.autograd import Grad
 
 
 def sigmoid(x):

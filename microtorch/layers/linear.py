@@ -1,10 +1,9 @@
 from typing import Literal, Optional
-from autograd import Grad
-from layers import Base
-from functions import sigmoid
+from microtorch.autograd.autograd import Grad
+from microtorch.functions.sigmoid import sigmoid
+from microtorch.layers.base import Layer
 
-
-class Linear(Base):
+class Linear(Layer):
     def __init__(self, in_features: int, out_features: int, bias=True, activation: Optional[Literal['relu', 'sigmoid']] = None):
         self.in_features = in_features
         self.out_features = out_features

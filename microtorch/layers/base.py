@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
-from autograd import Grad
+from microtorch.autograd.autograd import Grad
 
-class Base(ABC):
+
+class Layer(ABC):
     @abstractmethod
     def forward(self, x):
         pass

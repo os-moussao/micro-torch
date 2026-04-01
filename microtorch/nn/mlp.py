@@ -1,6 +1,6 @@
-from layers import Linear
-from autograd import Grad
-from .base import Model
+from microtorch.layers.linear import Linear
+from microtorch.nn.base import Model
+
 
 class MLP(Model):
     """Multi-Layer Perceptron (MLP) model."""
