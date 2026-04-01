@@ -1,4 +1,4 @@
-from .mse import mse
+from .mse import mean_squared_error
 from .sigmoid import sigmoid
 
-__all__ = ['mse']
+__all__ = ['mean_squared_error', 'sigmoid']
