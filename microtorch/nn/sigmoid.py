@@ -1,6 +1,6 @@
 from microtorch.autograd.autograd import Grad
 from microtorch.functions.sigmoid import sigmoid
-from microtorch.layers.base import Layer
+from microtorch.nn.base_layer import Layer
 
 
 class Sigmoid(Layer):

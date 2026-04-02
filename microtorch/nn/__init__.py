@@ -1,4 +1,7 @@
-from .mlp import MLP
-from .base import Model
+from .base_layer import Layer
+from .base_model import Model
+from .linear import Linear
+from .relu import ReLU
+from .sigmoid import Sigmoid
 
-__all__ = ['MLP', 'Model']
+__all__ = ['Layer', 'Model', 'Linear', 'ReLU', 'Sigmoid']

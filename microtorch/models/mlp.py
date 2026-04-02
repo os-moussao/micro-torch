@@ -1,5 +1,6 @@
-from microtorch.layers.linear import Linear
-from microtorch.nn.base import Model
+from microtorch.nn.base_layer import Layer
+from microtorch.nn.linear import Linear
+from microtorch.nn.base_model import Model
 
 
 class MLP(Model):
@@ -8,15 +9,21 @@ class MLP(Model):
         assert len(hidden_layers) > 0, "At least one hidden layer is required."
         super().__init__()
 
+        self._layers: list[Layer] = []
+
         for i in range(len(hidden_layers)):
-            self.layers.append(Linear(
+            self._layers.append(Linear(
                 in_features=hidden_layers[i-1] if i != 0 else in_size,
                 out_features=hidden_layers[i],
                 activation='relu')
             )
 
-        self.layers.append(Linear(
+        self._layers.append(Linear(
             in_features=hidden_layers[-1],
             out_features=out_size,
             activation=None)
         )
+    
+    @property
+    def layers(self) -> list[Layer]:
+        return self._layers

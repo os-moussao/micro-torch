@@ -1,5 +1,5 @@
 from microtorch.autograd.autograd import Grad
-from microtorch.layers.base import Layer
+from microtorch.nn.base_layer import Layer
 
 
 class ReLU(Layer):
