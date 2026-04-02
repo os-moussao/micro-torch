@@ -3,13 +3,13 @@ from typing import List
 from microtorch.autograd.autograd import Grad
 
 
-class BaseOptimizer(ABC):
+class Optimizer(ABC):
     def __init__(self, params: List[Grad], lr: float = 0.01):
         self.params = params
         self.lr = lr
 
     @abstractmethod
-    def step(self, zero_grad=True):
+    def step(self):
         """Update parameters based on their gradients."""
         pass
 

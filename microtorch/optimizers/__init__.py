@@ -1,4 +1,4 @@
-from .base import BaseOptimizer
-from .gradient_descent import GradientDescent
+from .base import Optimizer
+from .sgd import SGD
 
-__all__ = ['GradientDescent', 'BaseOptimizer']
+__all__ = ['GradientDescent', 'SGD']

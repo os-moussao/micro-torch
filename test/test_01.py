@@ -3,7 +3,7 @@ Testing MLP model
 """
 from microtorch import models
 from microtorch.functions import mean_squared_error
-from microtorch.optimizers import GradientDescent
+from microtorch.optimizers import SGD
 import numpy as np
 
 np.random.seed(1337)
@@ -18,9 +18,8 @@ y = x.sum(axis=1).reshape(-1, 1)
 
 model = models.MLP(in_size=3, out_size=1, hidden_layers=[10])
 loss = mean_squared_error
-optimizer = GradientDescent(model.parameters(), lr=0.01)
+optimizer = SGD(model.parameters(), lr=0.01)
 
-lr = 0.01
 ep = 500
 
 for i in range(ep):
