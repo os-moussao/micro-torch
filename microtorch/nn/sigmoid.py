@@ -1,3 +1,4 @@
+from typing import Generator
 from microtorch.autograd.autograd import Grad
 from microtorch.functions.sigmoid import sigmoid
 from microtorch.nn.base_layer import Layer

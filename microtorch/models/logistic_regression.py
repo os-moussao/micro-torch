@@ -13,5 +13,10 @@ class LogisticRegression(Model):
         self._layers = [self.lin, self.sigmoid]
 
     @property
-    def layers(self) -> list[Layer]:
+    def layers(self):
         return self._layers
+
+    def forward(self, x):
+        x = self.lin(x)
+        x = self.sigmoid(x)
+        return x

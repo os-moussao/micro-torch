@@ -5,6 +5,7 @@ from microtorch.nn.base_model import Model
 
 class MLP(Model):
     """Multi-Layer Perceptron (MLP) model."""
+
     def __init__(self, in_size: int, out_size: int, hidden_layers: list[int] = [32]):
         assert len(hidden_layers) > 0, "At least one hidden layer is required."
         super().__init__()
@@ -23,7 +24,12 @@ class MLP(Model):
             out_features=out_size,
             activation=None)
         )
-    
+
     @property
-    def layers(self) -> list[Layer]:
+    def layers(self):
         return self._layers
+
+    def forward(self, x):
+        for layer in self._layers:
+            x = layer(x)
+        return x
