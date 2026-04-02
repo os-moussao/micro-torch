@@ -18,3 +18,6 @@ class Model(Layer, ABC):
         for layer in self.layers:
             params.extend(layer.parameters())
         return params
+
+    def fit(self):
+        pass
