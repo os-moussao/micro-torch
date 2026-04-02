@@ -1,5 +1,5 @@
 """
-Testing linear regression model
+Testing MLP model
 """
 from microtorch import models
 from microtorch.functions import mean_squared_error
@@ -16,13 +16,12 @@ x = np.array([
 ])
 y = x.sum(axis=1).reshape(-1, 1)
 
-
-model = models.LinearRegression(in_features=3, out_features=1)
+model = models.MLP(in_size=3, out_size=1, hidden_layers=[10])
 loss = mean_squared_error
 optimizer = GradientDescent(model.parameters(), lr=0.01)
 
 lr = 0.01
-ep = 1000
+ep = 500
 
 for i in range(ep):
     y_pred = model(x)
@@ -40,3 +39,4 @@ for i in range(ep):
 x_test = np.ones((1, 3))
 y_test = model(x_test)
 print(f"Prediction for {x_test}: {y_test}")
+
