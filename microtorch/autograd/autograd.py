@@ -157,6 +157,12 @@ class Grad():
         return Grad.full(shape, 1, requires_grad)
 
     @staticmethod
+    def array(arr, requires_grad=True):
+        arr = np.array(arr)
+        a = [Grad(x, requires_grad) for x in arr.flatten()]
+        return np.array(a).reshape(arr.shape)
+
+    @staticmethod
     @overload
     def exp(x: Grad) -> Grad: ...
 

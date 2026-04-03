@@ -10,7 +10,7 @@ class Linear(Layer):
         self.in_features = in_features
         self.out_features = out_features
         self.weight = Grad.rand((in_features, out_features))
-        self.bias = Grad.rand((1, out_features)) if bias else None
+        self.bias = Grad.zeros((1, out_features)) if bias else None
         self.activation = activation
 
         self._parameters: list[Grad] = self.weight.flatten().tolist()

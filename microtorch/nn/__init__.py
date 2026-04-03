@@ -3,5 +3,6 @@ from .base_model import Model
 from .linear import Linear
 from .relu import ReLU
 from .sigmoid import Sigmoid
+from .softmax import Softmax
 
-__all__ = ['Layer', 'Model', 'Linear', 'ReLU', 'Sigmoid']
+__all__ = ['Layer', 'Model', 'Linear', 'ReLU', 'Sigmoid', 'Softmax']
