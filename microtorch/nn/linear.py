@@ -1,3 +1,4 @@
+from ast import List
 from typing import Literal, Optional
 from microtorch.autograd.autograd import Grad
 from microtorch.functions.sigmoid import sigmoid
