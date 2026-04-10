@@ -44,8 +44,11 @@ class Linear(Layer):
             bound = np.sqrt(6.0 / self.in_features)
 
         # use xavier initialization for sigmoid/tanh activations
-        else:
+        elif activation == 'sigmoid':
             bound = np.sqrt(6.0 / (self.in_features + self.out_features))
+
+        else:
+            return Grad.rand((self.in_features, self.out_features))
 
         raw_weights = np.random.uniform(-bound, bound,
                                         size=(self.in_features, self.out_features))
