@@ -1,3 +1,5 @@
+from typing import Literal, Optional
+
 from microtorch.nn.base_layer import Layer
 from microtorch.nn.linear import Linear
 from microtorch.nn.base_model import Model
@@ -6,7 +8,12 @@ from microtorch.nn.base_model import Model
 class MLP(Model):
     """Multi-Layer Perceptron (MLP) model."""
 
-    def __init__(self, in_size: int, out_size: int, hidden_layers: list[int] = [32]):
+    def __init__(
+        self, in_size: int,
+        out_size: int,
+        hidden_layers: list[int],
+        activation: Optional[list[Literal['sigmoid', 'relu']]] = None
+    ):
         assert len(hidden_layers) > 0, "At least one hidden layer is required."
         super().__init__()
 
@@ -16,7 +23,7 @@ class MLP(Model):
             self._layers.append(Linear(
                 in_features=hidden_layers[i-1] if i != 0 else in_size,
                 out_features=hidden_layers[i],
-                activation='relu')
+                activation=activation[i] if activation is not None else 'relu')
             )
 
         self._layers.append(Linear(
