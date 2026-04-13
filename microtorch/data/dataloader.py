@@ -23,8 +23,10 @@ class DataLoader():
         if self.shuffle:
             rng = np.random if self.seed is None else np.random.default_rng(
                 self.seed)
-            rng.shuffle(self.X)
-            rng.shuffle(self.y)
+            indices = np.arange(len(self.X))
+            rng.shuffle(indices)
+            self.X = self.X[indices]
+            self.y = self.y[indices]
 
         for i in range(0, len(self.X), self.batch_size):
             yield (self.X[i: i + self.batch_size], self.y[i: i + self.batch_size])
