@@ -12,9 +12,11 @@ class MLP(Model):
         self, in_size: int,
         out_size: int,
         hidden_layers: list[int],
-        activation: Optional[list[Literal['sigmoid', 'relu']]] = None
+        activations: Optional[list[Literal['sigmoid', 'relu']]] = None
     ):
         assert len(hidden_layers) > 0, "At least one hidden layer is required."
+        assert activations is None or len(hidden_layers) == len(
+            activations), "Activations should match hidden layers length"
         super().__init__()
 
         self._layers: list[Layer] = []
@@ -23,7 +25,7 @@ class MLP(Model):
             self._layers.append(Linear(
                 in_features=hidden_layers[i-1] if i != 0 else in_size,
                 out_features=hidden_layers[i],
-                activation=activation[i] if activation is not None else 'relu')
+                activation=activations[i] if activations is not None else 'relu')
             )
 
         self._layers.append(Linear(
