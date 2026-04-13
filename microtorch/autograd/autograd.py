@@ -1,30 +1,37 @@
 from __future__ import annotations
-import math
 from typing import overload
 import numpy as np
 
 
-class Grad():
+class Grad:
     def __init__(self, val, required_grad=True, children=()):
-        self.val: float = val
-        self.grad: float | None = 0 if required_grad else None
+        self.val: np.float64 = val
+        self.grad: np.float64 | None = 0 if required_grad else None
         self.requires_grad = required_grad
 
-        self._children: tuple[Grad] = children
+        self._children = children
         self._backward = lambda: None
 
-    def backprop(self, is_result=True):
+    def backprop(self):
         """This function computed the partial derivatives of the result to every involved input (which requires gradient)"""
 
         assert self.requires_grad, "Must require gradient"
 
-        if is_result:
-            self.grad = 1
+        topo: list[Grad] = []
+        vis = set()
 
-        self._backward()
-        for child in self._children:
-            if child.requires_grad:
-                child.backprop(is_result=False)
+        def build_topo(v: Grad):
+            vis.add(id(v))
+            for c in v._children:
+                if id(c) not in vis:
+                    build_topo(c)
+            topo.append(v)
+
+        build_topo(self)
+
+        self.grad = 1.0
+        for node in reversed(topo):
+            node._backward()
 
     def __add__(self, other) -> Grad:
         other = other if isinstance(other, Grad) else Grad(
@@ -163,6 +170,22 @@ class Grad():
         return np.array(a).reshape(arr.shape)
 
     @staticmethod
+    def _exp(x: Grad) -> Grad:
+        out = Grad(
+            val=np.exp(x.val),
+            required_grad=x.requires_grad,
+            children=(x,)
+        )
+
+        def out_backward():
+            if x.requires_grad:
+                x.grad += out.val * out.grad
+
+        out._backward = out_backward
+
+        return out
+
+    @staticmethod
     @overload
     def exp(x: Grad) -> Grad: ...
 
@@ -172,19 +195,21 @@ class Grad():
 
     @staticmethod
     def exp(x: Grad | np.ndarray) -> Grad | np.ndarray:
-        return math.e ** x
+        if isinstance(x, Grad):
+            return Grad._exp(x)
+        return np.vectorize(Grad._exp)(x)
 
     @staticmethod
-    def _log(x: Grad, base: float = math.e) -> Grad:
+    def _log(x: Grad) -> Grad:
         out = Grad(
-            val=math.log(x.val, base),
+            val=np.log(x.val),
             required_grad=x.requires_grad,
             children=(x,)
         )
 
         def out_backward():
             if x.requires_grad:
-                x.grad += (1 / (x.val * math.log(base))) * out.grad
+                x.grad += (1 / x.val) * out.grad
 
         out._backward = out_backward
 
@@ -192,17 +217,33 @@ class Grad():
 
     @staticmethod
     @overload
-    def log(x: Grad, base: float = math.e) -> Grad: ...
+    def log(x: Grad) -> Grad: ...
 
     @staticmethod
     @overload
-    def log(x: np.ndarray, base: float = math.e) -> np.ndarray: ...
+    def log(x: np.ndarray) -> np.ndarray: ...
 
     @staticmethod
-    def log(x: Grad | np.ndarray, base: float = math.e) -> Grad | np.ndarray:
+    def log(x: Grad | np.ndarray) -> Grad | np.ndarray:
         if isinstance(x, Grad):
-            return Grad._log(x, base)
+            return Grad._log(x)
         return np.vectorize(Grad._log)(x)
+
+    @staticmethod
+    def _relu(x: Grad) -> Grad:
+        out = Grad(
+            val=x.val if x.val > 0 else 0,
+            required_grad=x.requires_grad,
+            children=(x,)
+        )
+
+        def out_backward():
+            if x.requires_grad:
+                x.grad += (1 if x.val > 0 else 0) * out.grad
+
+        out._backward = out_backward
+
+        return out
 
     @staticmethod
     @overload
@@ -214,14 +255,9 @@ class Grad():
 
     @staticmethod
     def relu(x: Grad | np.ndarray) -> Grad | np.ndarray:
-        mult = x > 0
-        return mult * x
-
-    @staticmethod
-    def item(x: np.ndarray) -> Grad:
-        x = x.flatten()
-        assert len(x) == 1, "Only one element allowed"
-        return x[0]
+        if isinstance(x, Grad):
+            return Grad._relu(x)
+        return np.vectorize(Grad._relu)(x)
 
     @staticmethod
     def _clip(x: Grad, min_val, max_val) -> Grad:
