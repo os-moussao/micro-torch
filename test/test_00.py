@@ -19,7 +19,7 @@ y = x.sum(axis=1).reshape(-1, 1)
 
 model = models.LinearRegression(in_features=3, out_features=1)
 loss = mean_squared_error
-optimizer = SGD(model.parameters(), lr=0.01)
+optimizer = SGD(model, lr=0.01)
 
 ep = 1000
 

@@ -109,3 +109,4 @@ webencodings==0.5.1
 websocket-client==1.9.0
 widgetsnbextension==4.0.15
 zipp==3.23.0
+tqdm==4.67.3

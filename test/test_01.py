@@ -18,9 +18,9 @@ y = x.sum(axis=1).reshape(-1, 1)
 
 model = models.MLP(in_size=3, out_size=1, hidden_layers=[10])
 loss = mean_squared_error
-optimizer = SGD(model.parameters(), lr=0.01)
+optimizer = SGD(model, lr=0.01)
 
-ep = 500
+ep = 100
 
 for i in range(ep):
     y_pred = model(x)
