@@ -10,7 +10,7 @@ class Grad:
         self.requires_grad = required_grad
 
         self._children = children
-        self._backward = lambda: None
+        self._backward = None
 
     def backprop(self):
         """This function computed the partial derivatives of the result to every involved input (which requires gradient)"""
@@ -31,7 +31,8 @@ class Grad:
 
         self.grad = 1.0
         for node in reversed(topo):
-            node._backward()
+            if node._backward is not None:
+                node._backward()
 
     def __add__(self, other) -> Grad:
         other = other if isinstance(other, Grad) else Grad(

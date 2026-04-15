@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import Generator, Optional
 from microtorch.autograd.autograd import Grad
 from microtorch.nn.base_layer import Layer
+import pickle
 
 
 class Model(Layer, ABC):
@@ -18,3 +18,13 @@ class Model(Layer, ABC):
         for layer in self.layers:
             params.extend(layer.parameters())
         return params
+
+    def save(self, filename):
+        with open(filename, 'wb') as file:
+            pickle.dump(self, file)
+
+    @classmethod
+    def load_model(cls, filename):
+        with open(filename, 'rb') as file:
+            model: Model = pickle.load(file)
+            return model

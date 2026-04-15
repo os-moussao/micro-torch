@@ -1,8 +1,7 @@
 from typing import Literal, Optional
-
 from microtorch.nn.base_layer import Layer
 from microtorch.nn.linear import Linear
-from microtorch.nn.base_model import Model
+from microtorch.models.base_model import Model
 
 
 class MLP(Model):

@@ -1,4 +1,4 @@
-from microtorch.nn.base_model import Model
+from microtorch.models.base_model import Model
 from microtorch.nn.linear import Linear
 
 

@@ -1,5 +1,4 @@
-from microtorch.autograd.autograd import Grad
-from microtorch.nn.base_model import Model
+from microtorch.models.base_model import Model
 from microtorch.optimizers.base import Optimizer
 
 

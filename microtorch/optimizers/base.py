@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List
-from microtorch.autograd.autograd import Grad
-from microtorch.nn.base_model import Model
+from microtorch.models.base_model import Model
 
 
 class Optimizer(ABC):
